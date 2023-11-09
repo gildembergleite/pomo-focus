@@ -1,6 +1,6 @@
 import DataSession from '@/components/DataSession'
 import Header from '@/components/Header'
-import TodoList from '@/components/TodoList'
+import ToDoList from '@/components/ToDoList'
 import { ModeProvider } from '@/providers/ModeProvider'
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
         <div className='grid grid-cols-2 pt-12 gap-9'>
           <ModeProvider>
             <DataSession />
-            <TodoList />
+            <ToDoList />
           </ModeProvider>
         </div>
       </div>

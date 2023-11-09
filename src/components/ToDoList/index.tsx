@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 
-export default function TodoList() {
+export default function ToDoList() {
   return (
     <Card className='flex flex-col flex-1 rounded-xl p-6'>
       <CardHeader>
