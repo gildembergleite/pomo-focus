@@ -4,10 +4,10 @@ import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/Mo
 import { v4 as uuid } from 'uuid'
 
 export default class TaskService {
-  private tasks: Task[] = []
-  private countCycles: number
-  private currentMode: Mode
-  private nextMode: Mode
+  public tasks: Task[] = []
+  public countCycles: number
+  public currentMode: Mode
+  public nextMode: Mode
 
   constructor() {
     this.countCycles = 0,
@@ -68,13 +68,5 @@ export default class TaskService {
     } else {
       await this.setModeConfig(longPauseMode, focusMode)
     }
-  }
-
-  async getCurrentMode() {
-    return this.currentMode
-  }
-
-  async getNextMode() {
-    return this.nextMode
   }
 }

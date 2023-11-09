@@ -16,19 +16,8 @@ export default function Modes({ selectMode }: ModeProps) {
   const [mode, setMode] = useState(awaitingMode)
 
   useEffect(() => {
-    setModeHandler()
+    setMode(selectMode === 'currentMode' ? data.currentMode : data.nextMode)
   }, [data, mode])
-
-  async function setModeHandler() {
-    if (selectMode === 'currentMode') {
-      const mode = await data.getCurrentMode()
-      setMode(mode)
-    } else {
-      const mode = await data.getNextMode()
-      setMode(mode)
-    }
-    console.log(mode.mode)
-  }
 
   const { icon, color, label } = getDefaultMode(mode)
 
