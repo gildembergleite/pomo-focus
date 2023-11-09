@@ -1,12 +1,13 @@
 'use client'
+import { Mode } from '@/@types/Mode'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
 export interface ModeProps {
-  mode: 'focus' | 'shortPause' | 'longPause';
+  mode: 'focus' | 'shortPause' | 'longPause'
 }
 
 export interface ModeContextProps {
-  mode: ModeProps
+  mode: Mode
   changeMode: (newMode: ModeProps) => void
 }
 
@@ -21,7 +22,7 @@ export function useMode() {
 }
 
 export function ModeProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<ModeProps>({ mode: 'focus' })
+  const [mode, setMode] = useState<ModeProps>({ mode: 'shortPause' })
 
   function changeMode(newMode: ModeProps) {
     setMode(newMode)

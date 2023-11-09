@@ -8,7 +8,7 @@ export default function NextMode() {
         <p className="text-zinc-400 font-medium">Qual ciclo será ativado:</p>
       </div>
       <div>
-        <Modes mode='shortPause' />
+        <Modes />
       </div>
     </div>
   )

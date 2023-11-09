@@ -8,7 +8,7 @@ export default function CurrentMode() {
         <p className="text-zinc-400 font-medium">Ciclo atual do cronômetro</p>
       </div>
       <div>
-        <Modes mode='focus' />
+        <Modes />
       </div>
     </div>
   )

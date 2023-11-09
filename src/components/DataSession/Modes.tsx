@@ -1,10 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Brain, CoffeeIcon } from 'lucide-react'
-
-interface ModeProps {
-  mode: 'focus' | 'shortPause' | 'longPause';
-}
+import { ModeContext } from '@/providers/ModeProvider'
+import { Mode } from '@/@types/Mode'
 
 interface ModeInfo {
   [key: string]: ModeSchemaProps;
@@ -34,9 +32,10 @@ const modeInfo: ModeInfo = {
   }
 }
 
-const getDefaultMode = (mode: string): ModeSchemaProps => modeInfo[mode]
+const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.mode]
 
-export default function Modes({ mode }: ModeProps) {
+export default function Modes() {
+  const { mode } = useContext(ModeContext)
   const [modeSchema, setModeSchema] = useState<ModeSchemaProps>(getDefaultMode(mode))
 
   useEffect(() => {
