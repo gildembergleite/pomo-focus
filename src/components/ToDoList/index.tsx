@@ -1,5 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import ListItem from './ListItem'
+import InputForm from './InputForm'
 
 export default function ToDoList() {
   return (
@@ -9,8 +12,16 @@ export default function ToDoList() {
         <CardDescription className='text-base text-zinc-500'>Seus objetivos para essa sessão</CardDescription>
       </CardHeader>
       <Separator className='my-6' />
-      <CardContent>
-        
+      <CardContent className='flex flex-col h-full justify-between'>
+        <ScrollArea>
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+          <ListItem />
+        </ScrollArea>
+        <InputForm />
       </CardContent>
     </Card>
   )
