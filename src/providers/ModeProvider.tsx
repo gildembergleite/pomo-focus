@@ -1,16 +1,14 @@
 'use client'
 import { Mode } from '@/@types/Mode'
+import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/ModeWithDurations'
 import TaskService from '@/services/TaskServices'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
-export interface ModeProps {
-  mode: 'awaiting' | 'focus' | 'shortPause' | 'longPause'
-}
-
 export interface ModeContextProps {
   data: TaskService
-  mode: Mode
-  changeMode: (newMode: ModeProps) => void
+  currentMode: Mode
+  nextMode: Mode
+  changeMode: () => void
 }
 
 export const ModeContext = createContext({} as ModeContextProps)
@@ -25,14 +23,31 @@ export function useMode() {
 
 export function ModeProvider({ children }: { children: ReactNode }) {
   const data = new TaskService()
-  const [mode, setMode] = useState<ModeProps>({ mode: 'awaiting' })
+  const [currentMode, setCurrentMode] = useState<Mode>(awaitingMode)
+  const [nextMode, setNextMode] = useState<Mode>(focusMode)
+  const [countCycles, setCountCycles] = useState(0)
 
-  function changeMode(newMode: ModeProps) {
-    setMode(newMode)
+  function changeMode() {
+    if (countCycles === 0 || countCycles === 2 || countCycles === 4 || countCycles === 6) {
+      setCurrentMode(focusMode)
+      setNextMode(shortPauseMode)
+      setCountCycles((state) => state + 1)
+      console.log(countCycles)
+    } else if (countCycles === 1 || countCycles === 3 || countCycles === 5 || countCycles === 7) {
+      setCurrentMode(shortPauseMode)
+      setNextMode(focusMode)
+      setCountCycles((state) => state + 1)
+      console.log(countCycles)
+    } else {
+      setCurrentMode(longPauseMode)
+      setNextMode(focusMode)
+      setCountCycles(0)
+      console.log(countCycles)
+    }
   }
 
   return (
-    <ModeContext.Provider value={{ data, mode, changeMode }}>
+    <ModeContext.Provider value={{ data, currentMode, nextMode, changeMode }}>
       {children}
     </ModeContext.Provider>
   )

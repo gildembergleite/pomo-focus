@@ -35,4 +35,8 @@ export default class TaskService {
       this.tasks.splice(taskIndex, 1)
     }
   }
+
+  async changeMode() {
+    
+  }
 }
