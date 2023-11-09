@@ -27,22 +27,26 @@ export function ModeProvider({ children }: { children: ReactNode }) {
   const [nextMode, setNextMode] = useState<Mode>(focusMode)
   const [countCycles, setCountCycles] = useState(0)
 
-  function changeMode() {
-    if (countCycles === 0 || countCycles === 2 || countCycles === 4 || countCycles === 6) {
-      setCurrentMode(focusMode)
-      setNextMode(shortPauseMode)
+  function setModeConfig(currentMode: Mode, nextMode: Mode) {
+    setCurrentMode(currentMode)
+    setNextMode(nextMode)
+    if (countCycles < 7) {
       setCountCycles((state) => state + 1)
-      console.log(countCycles)
-    } else if (countCycles === 1 || countCycles === 3 || countCycles === 5 || countCycles === 7) {
-      setCurrentMode(shortPauseMode)
-      setNextMode(focusMode)
-      setCountCycles((state) => state + 1)
-      console.log(countCycles)
     } else {
-      setCurrentMode(longPauseMode)
-      setNextMode(focusMode)
       setCountCycles(0)
-      console.log(countCycles)
+    }
+    console.log(countCycles)
+  }
+
+  function changeMode() {
+    if (countCycles === 0 || countCycles === 2 || countCycles === 4) {
+      setModeConfig(focusMode, shortPauseMode)
+    } else if (countCycles === 1 || countCycles === 3 || countCycles === 5) {
+      setModeConfig(shortPauseMode, focusMode)
+    } else if (countCycles === 6) {
+      setModeConfig(focusMode, longPauseMode)
+    } else {
+      setModeConfig(longPauseMode, focusMode)
     }
   }
 
