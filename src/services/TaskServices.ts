@@ -20,4 +20,12 @@ export default class TaskService {
       console.error('A descrição da tarefa não pode ser vazia!')
     }
   }
+
+  async markTaskAsCompleted(taskId: string) {
+    const taskIndex = this.tasks.findIndex((task) => task.id === taskId)
+    if (taskIndex !== -1) {
+      const task = this.tasks[taskIndex]
+      task.isCompleted = !task.isCompleted
+    }
+  }
 }
