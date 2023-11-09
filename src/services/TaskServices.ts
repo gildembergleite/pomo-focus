@@ -28,4 +28,11 @@ export default class TaskService {
       task.isCompleted = !task.isCompleted
     }
   }
+
+  async deleteTask(taskId: string) {
+    const taskIndex = this.tasks.findIndex((task) => task.id === taskId)
+    if (taskIndex !== -1) {
+      this.tasks.splice(taskIndex, 1)
+    }
+  }
 }
