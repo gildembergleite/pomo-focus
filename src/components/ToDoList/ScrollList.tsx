@@ -19,7 +19,7 @@ export default function ScrollList() {
   }
   
   return (
-    <ScrollArea>
+    <ScrollArea className='max-h-[430px]'>
       {tasks?.map((task) => (
         <ListItem key={task.id} task={task} />
       ))}
