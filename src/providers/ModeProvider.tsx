@@ -25,7 +25,7 @@ export function useMode() {
 
 export function ModeProvider({ children }: { children: ReactNode }) {
   const data = new TaskService()
-  const [mode, setMode] = useState<ModeProps>({ mode: 'shortPause' })
+  const [mode, setMode] = useState<ModeProps>({ mode: 'awaiting' })
 
   function changeMode(newMode: ModeProps) {
     setMode(newMode)
