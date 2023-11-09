@@ -11,15 +11,15 @@ interface ModeProps {
 }
 
 export default function Modes({ selectMode }: ModeProps) {
-  const { currentMode, nextMode } = useContext(ModeContext)
+  const { data } = useContext(ModeContext)
   
-  const mode = selectMode === 'currentMode' ? currentMode : nextMode
+  const mode = selectMode === 'currentMode' ? data.currentMode : data.nextMode
   
   const [modeSchema, setModeSchema] = useState<ModeSchemaProps>(getDefaultMode(mode))
 
   useEffect(() => {
     setModeSchema(getDefaultMode(mode))
-  }, [mode])
+  }, [data])
 
   const { icon, color, label } = modeSchema
 

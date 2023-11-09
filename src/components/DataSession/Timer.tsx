@@ -5,7 +5,7 @@ import { Pause, Play, RefreshCw } from 'lucide-react'
 import { ModeContext } from '@/providers/ModeProvider'
 
 export default function Timer() {
-  const { currentMode, changeMode } = useContext(ModeContext)
+  const { data } = useContext(ModeContext)
   const [progress, setProgress] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
@@ -21,7 +21,7 @@ export default function Timer() {
     let timer: NodeJS.Timeout
 
     if (isRunning) {
-      setSeconds(currentMode.timeInSeconds)
+      setSeconds(data.currentMode.timeInSeconds)
       timer = setInterval(() => {
         setProgress((state) => (state >= seconds ? 0 : state + 1))
       }, 1000)
@@ -34,7 +34,7 @@ export default function Timer() {
 
   async function startTimer() {
     setIsRunning(true)
-    changeMode()
+    await data.changeMode()
   }
 
   const stopTimer = () => {

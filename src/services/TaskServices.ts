@@ -1,8 +1,19 @@
+import { Mode } from '@/@types/Mode'
 import { Task } from '@/@types/Task'
+import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/ModeWithDurations'
 import { v4 as uuid } from 'uuid'
 
 export default class TaskService {
-  private tasks: Task[] = []
+  tasks: Task[] = []
+  countCycles: number
+  currentMode: Mode
+  nextMode: Mode
+
+  constructor() {
+    this.countCycles = 0,
+    this.currentMode = awaitingMode,
+    this.nextMode = focusMode
+  }
 
   async getAllTasks() {
     return this.tasks
@@ -36,7 +47,26 @@ export default class TaskService {
     }
   }
 
+  async setModeConfig(currentMode: Mode, nextMode: Mode) {
+    this.currentMode = currentMode
+    this.nextMode = nextMode
+    if (this.countCycles < 7) {
+      this.countCycles = this.countCycles + 1
+    } else {
+      this.countCycles = 0
+    }
+    console.log(this.countCycles)
+  }
+
   async changeMode() {
-    
+    if (this.countCycles === 0 || this.countCycles === 2 || this.countCycles === 4) {
+      await this.setModeConfig(focusMode, shortPauseMode)
+    } else if (this.countCycles === 1 || this.countCycles === 3 || this.countCycles === 5) {
+      await this.setModeConfig(shortPauseMode, focusMode)
+    } else if (this.countCycles === 6) {
+      await this.setModeConfig(focusMode, longPauseMode)
+    } else {
+      await this.setModeConfig(longPauseMode, focusMode)
+    }
   }
 }
