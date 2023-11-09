@@ -1,5 +1,6 @@
 'use client'
 import { Mode } from '@/@types/Mode'
+import TaskService from '@/services/TaskServices'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
 export interface ModeProps {
@@ -7,6 +8,7 @@ export interface ModeProps {
 }
 
 export interface ModeContextProps {
+  data: TaskService
   mode: Mode
   changeMode: (newMode: ModeProps) => void
 }
@@ -22,6 +24,7 @@ export function useMode() {
 }
 
 export function ModeProvider({ children }: { children: ReactNode }) {
+  const data = new TaskService()
   const [mode, setMode] = useState<ModeProps>({ mode: 'shortPause' })
 
   function changeMode(newMode: ModeProps) {
@@ -29,7 +32,7 @@ export function ModeProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ModeContext.Provider value={{ mode, changeMode }}>
+    <ModeContext.Provider value={{ data, mode, changeMode }}>
       {children}
     </ModeContext.Provider>
   )

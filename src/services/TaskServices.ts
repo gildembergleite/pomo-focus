@@ -4,17 +4,20 @@ import { v4 as uuid } from 'uuid'
 export default class TaskService {
   private tasks: Task[] = []
 
-  getAllTasks(): Task[] {
+  async getAllTasks() {
     return this.tasks
   }
   
-  addNewTask(taskDescription: string) {
-    const task: Task = {
-      id: uuid(),
-      description: taskDescription,
-      isCompleted: false,
+  async addNewTask(taskDescription: string) {
+    if (taskDescription.length > 0) {
+      const task: Task = {
+        id: uuid(),
+        description: taskDescription,
+        isCompleted: false,
+      }
+      this.tasks.push(task)
+    } else {
+      console.error('A descrição da tarefa não pode ser vazia!')
     }
-
-    this.tasks.push(task)
   }
 }
