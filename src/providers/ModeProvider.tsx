@@ -4,7 +4,7 @@ import TaskService from '@/services/TaskServices'
 import { ReactNode, createContext, useContext, useState } from 'react'
 
 export interface ModeProps {
-  mode: 'focus' | 'shortPause' | 'longPause'
+  mode: 'awaiting' | 'focus' | 'shortPause' | 'longPause'
 }
 
 export interface ModeContextProps {

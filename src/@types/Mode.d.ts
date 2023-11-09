@@ -1,3 +1,3 @@
 export type Mode = {
-  mode: 'focus' | 'shortPause' | 'longPause'
+  mode: 'awaiting' | 'focus' | 'shortPause' | 'longPause'
 }
