@@ -1,6 +1,6 @@
 'use client'
-import { useContext, useEffect, useState } from 'react'
-import { ModeContext } from '@/providers/ModeProvider'
+import { useEffect, useState } from 'react'
+import { useMode } from '@/providers/ModeProvider'
 import { Mode } from '@/@types/Mode'
 import { ModeSchemaProps, modeInfo } from '@/lib/ModeInfo'
 import { awaitingMode } from '@/lib/ModeWithDurations'
@@ -12,14 +12,24 @@ interface ModeProps {
 const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.mode]
 
 export default function Modes({ selectMode }: ModeProps) {
-  const { data } = useContext(ModeContext)
-  const [mode, setMode] = useState(awaitingMode)
+  const { data } = useMode()
+  const [mode, setMode] = useState<Mode>(awaitingMode)
+  const [modeSchema, setModeSchema] = useState(getDefaultMode(mode))
 
   useEffect(() => {
-    setMode(selectMode === 'currentMode' ? data.currentMode : data.nextMode)
-  }, [data, mode])
+    setModeTo()
+  }, [mode])
 
-  const { icon, color, label } = getDefaultMode(mode)
+  async function setModeTo() {
+    const newMode = selectMode === 'currentMode'
+      ? await data.getCurrentMode()
+      : await data.getNextMode()
+    
+    setMode(newMode)
+    setModeSchema(getDefaultMode(newMode))
+  }
+
+  const { icon, color, label } = modeSchema
 
   return (
     <div className={`${color} flex items-center gap-2 px-2 py-1 border bg-opacity-20 rounded-sm`}>

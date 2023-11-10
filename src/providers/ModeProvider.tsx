@@ -1,6 +1,6 @@
 'use client'
 import TaskService from '@/services/TaskServices'
-import { ReactNode, createContext } from 'react'
+import { ReactNode, createContext, useContext } from 'react'
 
 export interface ModeContextProps {
   data: TaskService
@@ -16,4 +16,12 @@ export function ModeProvider({ children }: { children: ReactNode }) {
       {children}
     </ModeContext.Provider>
   )
+}
+
+export const useMode = () => {
+  const context = useContext(ModeContext)
+  if (!context) {
+    throw new Error('useMode must be used within a ModeProvider')
+  }
+  return context
 }

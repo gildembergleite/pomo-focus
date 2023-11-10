@@ -1,12 +1,12 @@
 'use client'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import ListItem from './ListItem'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Task } from '@/@types/Task'
-import { ModeContext } from '@/providers/ModeProvider'
+import { useMode } from '@/providers/ModeProvider'
 
 export default function ScrollList() {
-  const { data } = useContext(ModeContext)
+  const { data } = useMode()
   const [tasks, setTasks] = useState<Task[]>()
 
   useEffect(() => {

@@ -69,4 +69,12 @@ export default class TaskService {
       await this.setModeConfig(longPauseMode, focusMode)
     }
   }
+
+  async getCurrentMode() {
+    return this.currentMode
+  }
+
+  async getNextMode() {
+    return this.nextMode
+  }
 }

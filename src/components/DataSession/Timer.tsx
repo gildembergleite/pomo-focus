@@ -1,11 +1,11 @@
 'use client'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '../ui/button'
 import { Pause, Play, RefreshCw } from 'lucide-react'
-import { ModeContext } from '@/providers/ModeProvider'
+import { useMode } from '@/providers/ModeProvider'
 
 export default function Timer() {
-  const { data } = useContext(ModeContext)
+  const { data } = useMode()
   const [progress, setProgress] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
