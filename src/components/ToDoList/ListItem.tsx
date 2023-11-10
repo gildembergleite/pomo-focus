@@ -22,7 +22,7 @@ export default function ListItem({ task }: ListItemProps) {
   }
 
   return (
-    <div className='flex h-full justify-between items-center mb-4'>
+    <div className='flex h-full justify-between items-center mb-2'>
       <div className='flex items-center gap-2'>
         <Checkbox
           onClick={() => handleMarkTaskAsCompleted(task.id)}
