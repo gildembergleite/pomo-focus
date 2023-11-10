@@ -10,13 +10,13 @@ export default function Timer() {
   const [progress, setProgress] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
+  const [isFinished, setIsFinished] = useState(false)
 
   useEffect(() => {
     let timer: NodeJS.Timeout
 
-    if (seconds > 0 && progress === 0 && isRunning === false) {
+    if (seconds > 0 && progress === 0 && isFinished === true) {
       changeMode()
-      console.log('test')
     }
 
     if (isRunning) {
@@ -26,6 +26,7 @@ export default function Timer() {
         setProgress((state) => {
           if (state >= seconds) {
             setIsRunning(false)
+            setIsFinished(true)
             return 0
           } else {
             return state + 1
@@ -41,6 +42,7 @@ export default function Timer() {
 
   async function startTimer() {
     setIsRunning(true)
+    setIsFinished(false)
   }
 
   const stopTimer = () => {

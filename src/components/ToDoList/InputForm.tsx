@@ -11,7 +11,7 @@ export default function InputForm() {
 
   async function handleAddNewTask(event: FormEvent) {
     event.preventDefault()
-    await addNewTask(inputValue)
+    addNewTask(inputValue)
     setInputValue('')
   }
 
@@ -26,6 +26,7 @@ export default function InputForm() {
         placeholder='Adicione uma nova tarefa'
         value={inputValue}
         onChange={(e) => handleSetInputValue(e.target.value)}
+        required
       />
       <Button>Adicionar</Button>
     </form>
