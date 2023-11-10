@@ -1,15 +1,16 @@
 import { Mode } from '@/@types/Mode'
 import { Task } from '@/@types/Task'
-import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/ModeWithDurations'
+import { awaitingMode, focusMode } from '@/lib/ModeWithDurations'
 import { v4 as uuid } from 'uuid'
 
 export default class TaskService {
-  public tasks: Task[] = []
+  public tasks: Task[]
   public countCycles: number
   public currentMode: Mode
   public nextMode: Mode
 
   constructor() {
+    this.tasks = [],
     this.countCycles = 0,
     this.currentMode = awaitingMode,
     this.nextMode = focusMode
@@ -47,34 +48,34 @@ export default class TaskService {
     }
   }
 
-  async setModeConfig(currentMode: Mode, nextMode: Mode) {
-    this.currentMode = currentMode
-    this.nextMode = nextMode
-    if (this.countCycles < 7) {
-      this.countCycles = this.countCycles + 1
-    } else {
-      this.countCycles = 0
-    }
-    console.log(this.countCycles, this.currentMode, this.nextMode)
-  }
+  // async setModeConfig(currentMode: Mode, nextMode: Mode) {
+  //   this.currentMode = currentMode
+  //   this.nextMode = nextMode
+  //   if (this.countCycles < 7) {
+  //     this.countCycles = this.countCycles + 1
+  //   } else {
+  //     this.countCycles = 0
+  //   }
+  //   console.log(this.countCycles, this.currentMode, this.nextMode)
+  // }
 
-  async changeMode() {
-    if (this.countCycles === 0 || this.countCycles === 2 || this.countCycles === 4) {
-      await this.setModeConfig(focusMode, shortPauseMode)
-    } else if (this.countCycles === 1 || this.countCycles === 3 || this.countCycles === 5) {
-      await this.setModeConfig(shortPauseMode, focusMode)
-    } else if (this.countCycles === 6) {
-      await this.setModeConfig(focusMode, longPauseMode)
-    } else {
-      await this.setModeConfig(longPauseMode, focusMode)
-    }
-  }
+  // async changeMode() {
+  //   if (this.countCycles === 0 || this.countCycles === 2 || this.countCycles === 4) {
+  //     await this.setModeConfig(focusMode, shortPauseMode)
+  //   } else if (this.countCycles === 1 || this.countCycles === 3 || this.countCycles === 5) {
+  //     await this.setModeConfig(shortPauseMode, focusMode)
+  //   } else if (this.countCycles === 6) {
+  //     await this.setModeConfig(focusMode, longPauseMode)
+  //   } else {
+  //     await this.setModeConfig(longPauseMode, focusMode)
+  //   }
+  // }
 
-  async getCurrentMode() {
-    return this.currentMode
-  }
+  // async getCurrentMode() {
+  //   return this.currentMode
+  // }
 
-  async getNextMode() {
-    return this.nextMode
-  }
+  // async getNextMode() {
+  //   return this.nextMode
+  // }
 }

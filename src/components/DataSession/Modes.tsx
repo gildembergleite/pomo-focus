@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useMode } from '@/providers/ModeProvider'
 import { Mode } from '@/@types/Mode'
 import { ModeSchemaProps, modeInfo } from '@/lib/ModeInfo'
-import { awaitingMode } from '@/lib/ModeWithDurations'
 
 interface ModeProps {
   selectMode: 'currentMode' | 'nextMode'
@@ -12,22 +11,13 @@ interface ModeProps {
 const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.mode]
 
 export default function Modes({ selectMode }: ModeProps) {
-  const { data } = useMode()
-  const [mode, setMode] = useState<Mode>(awaitingMode)
+  const { currentMode, nextMode } = useMode()
+  const mode = selectMode === 'currentMode' ? currentMode : nextMode
   const [modeSchema, setModeSchema] = useState(getDefaultMode(mode))
 
   useEffect(() => {
-    setModeTo()
+    setModeSchema(getDefaultMode(mode))
   }, [mode])
-
-  async function setModeTo() {
-    const newMode = selectMode === 'currentMode'
-      ? await data.getCurrentMode()
-      : await data.getNextMode()
-    
-    setMode(newMode)
-    setModeSchema(getDefaultMode(newMode))
-  }
 
   const { icon, color, label } = modeSchema
 
