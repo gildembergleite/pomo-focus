@@ -20,13 +20,14 @@ export default function Timer() {
         setProgress((state) => {
           if (state >= seconds) {
             setIsRunning(false)
-            changeMode()
             return 0
           } else {
             return state + 1
           }
         })
       }, 1000)
+    } else if (seconds > 0) {
+      changeMode()
     }
 
     return () => {
@@ -36,7 +37,6 @@ export default function Timer() {
 
   async function startTimer() {
     setIsRunning(true)
-    changeMode()
   }
 
   const stopTimer = () => {
@@ -51,24 +51,29 @@ export default function Timer() {
 
   return (
     <div className="flex flex-col w-full py-6 justify-center items-center gap-8">
-      <Stopwatch strokeProgress={progress/seconds} />
-      <div className='flex justify-center items-center gap-4'>
-        {isRunning ? (
-          <Button variant={'secondary'} className='gap-2' onClick={stopTimer}>
-            <Pause size={16} />
-            Pausar ciclo
-          </Button>
-        ) : (
-          <Button className='gap-2' onClick={startTimer}>
-            <Play size={16} />
+      <Stopwatch progress={progress} seconds={seconds} />
+      {currentMode.mode === 'awaiting'
+        ? (
+          <Button className='gap-2' onClick={changeMode}>
             Iniciar ciclo
-          </Button>
-        )}
-        <Button variant={'destructive'} className='gap-2' onClick={resetTimer}>
-          <RefreshCw size={16} />
-          Reiniciar ciclo
-        </Button>
-      </div>
+          </Button>)
+        : (
+          <div className='flex justify-center items-center gap-4'>
+            {isRunning ? (
+              <Button variant={'secondary'} className='gap-2' onClick={stopTimer}>
+                <Pause size={16} />
+              </Button>
+            ) : (
+              <Button className='gap-2' onClick={startTimer}>
+                <Play size={16} />
+              </Button>
+            )}
+            <Button variant={'destructive'} className='gap-2' onClick={resetTimer}>
+              <RefreshCw size={16} />
+            </Button>
+          </div>
+        )
+      }
     </div>
   )
 }

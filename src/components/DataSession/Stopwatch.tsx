@@ -3,10 +3,11 @@ import { useMode } from '@/providers/ModeProvider'
 import { useEffect, useState } from 'react'
 
 interface StopwatchProps {
-  strokeProgress: number
+  progress: number
+  seconds: number
 }
 
-export default function Stopwatch({ strokeProgress }: StopwatchProps) {
+export default function Stopwatch({ progress, seconds }: StopwatchProps) {
   const { currentMode } = useMode()
   const [strokeColor, setStrokeColor] = useState('')
 
@@ -22,7 +23,7 @@ export default function Stopwatch({ strokeProgress }: StopwatchProps) {
   }
   
   const circumference = 2 * Math.PI * 48
-  const offset = (circumference * strokeProgress)
+  const offset = (circumference * progress / seconds)
   const borderStyle = {
     strokeDasharray: circumference,
     strokeDashoffset: -offset,

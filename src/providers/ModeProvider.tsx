@@ -28,7 +28,6 @@ export function ModeProvider({ children }: { children: ReactNode }) {
     } else {
       setCountCycles(0)
     }
-    console.log(countCycles, currentMode, nextMode)
   }
 
   function changeMode() {
