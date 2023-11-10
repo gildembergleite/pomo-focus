@@ -3,38 +3,40 @@ import { useState, useEffect } from 'react'
 import { Button } from '../ui/button'
 import { Pause, Play, RefreshCw } from 'lucide-react'
 import { useMode } from '@/providers/ModeProvider'
+import Stopwatch from './Stopwatch'
 
 export default function Timer() {
-  const { data } = useMode()
+  const { currentMode, changeMode } = useMode()
   const [progress, setProgress] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
-
-  const circumference = 2 * Math.PI * 48
-  const offset = (circumference * progress / seconds)
-  const borderStyle = {
-    strokeDasharray: circumference,
-    strokeDashoffset: -offset,
-  }
 
   useEffect(() => {
     let timer: NodeJS.Timeout
 
     if (isRunning) {
-      setSeconds(data.currentMode.timeInSeconds)
+      setSeconds(currentMode.timeInSeconds)
       timer = setInterval(() => {
-        setProgress((state) => (state >= seconds ? 0 : state + 1))
+        setProgress((state) => {
+          if (state >= seconds) {
+            setIsRunning(false)
+            changeMode()
+            return 0
+          } else {
+            return state + 1
+          }
+        })
       }, 1000)
     }
 
     return () => {
       clearInterval(timer)
     }
-  }, [isRunning])
+  }, [isRunning, seconds])
 
   async function startTimer() {
     setIsRunning(true)
-    await data.changeMode()
+    changeMode()
   }
 
   const stopTimer = () => {
@@ -49,26 +51,7 @@ export default function Timer() {
 
   return (
     <div className="flex flex-col w-full py-6 justify-center items-center gap-8">
-      <div className="relative w-56 h-56 rounded-full bg-zinc-100">
-        <svg className="absolute w-full h-full min-w-56 min-h-56 rounded-full -rotate-90" viewBox="0 0 100 100">
-          <circle
-            className="circle stroke-lime-500"
-            cx="50"
-            cy="50"
-            r="48"
-            fill="transparent"
-            strokeWidth="8"
-            style={borderStyle}
-          />
-        </svg>
-        <div className="flex w-56 h-56 justify-center items-center text-5xl text-zinc-600 font-extrabold bg-white border-[14px] rounded-full border-zinc-100">
-          <span>2</span>
-          <span>5</span>
-          <span>:</span>
-          <span>0</span>
-          <span>0</span>
-        </div>
-      </div>
+      <Stopwatch strokeProgress={progress/seconds} />
       <div className='flex justify-center items-center gap-4'>
         {isRunning ? (
           <Button variant={'secondary'} className='gap-2' onClick={stopTimer}>
