@@ -1,34 +1,48 @@
 'use client'
+import { Rajdhani } from 'next/font/google'
 import { useMode } from '@/providers/ModeProvider'
 import { useEffect, useState } from 'react'
 
 interface StopwatchProps {
-  progress: number
-  seconds: number
+  isRunning: boolean
+  progress: number;
 }
 
-export default function Stopwatch({ progress, seconds }: StopwatchProps) {
+const rajdhani = Rajdhani({ subsets: ['latin'], weight: '700'})
+
+export default function Stopwatch({ progress }: StopwatchProps) {
   const { currentMode } = useMode()
   const [strokeColor, setStrokeColor] = useState('')
+  const [minutes, setMinutes] = useState(0)
+  const [displaySeconds, setDisplaySeconds] = useState(0)
 
   useEffect(() => {
     setStrokeColor(modeColors[currentMode.mode])
   }, [currentMode])
-  
+
+  useEffect(() => {
+    const remainingSeconds = currentMode.timeInSeconds - Math.floor(progress)
+    const mins = Math.floor(remainingSeconds / 60)
+    const secs = remainingSeconds % 60
+
+    setMinutes(mins)
+    setDisplaySeconds(secs)
+  }, [progress, currentMode])
+
   const modeColors: { [key in typeof currentMode.mode]: string } = {
     awaiting: 'stroke-zinc-300',
     focus: 'stroke-lime-500',
     shortPause: 'stroke-amber-500',
     longPause: 'stroke-cyan-500',
   }
-  
+
   const circumference = 2 * Math.PI * 48
-  const offset = (circumference * progress / seconds)
+  const offset = (circumference * progress) / currentMode.timeInSeconds
   const borderStyle = {
     strokeDasharray: circumference,
     strokeDashoffset: -offset,
   }
-  
+
   return (
     <div className="relative w-56 h-56 rounded-full bg-zinc-100">
       <svg className="absolute w-full h-full min-w-56 min-h-56 rounded-full -rotate-90" viewBox="0 0 100 100">
@@ -42,12 +56,12 @@ export default function Stopwatch({ progress, seconds }: StopwatchProps) {
           style={borderStyle}
         />
       </svg>
-      <div className="flex w-56 h-56 justify-center items-center text-5xl text-zinc-600 font-extrabold bg-white border-[14px] rounded-full border-zinc-100">
-        <span>0</span>
-        <span>0</span>
+      <div className={`
+      ${rajdhani.className} flex w-56 h-56 justify-center items-center text-6xl 
+      text-zinc-600 font-bold bg-white border-[14px] rounded-full border-zinc-100`}>
+        <span>{String(minutes).padStart(2, '0')}</span>
         <span>:</span>
-        <span>0</span>
-        <span>0</span>
+        <span>{String(displaySeconds).padStart(2, '0')}</span>
       </div>
     </div>
   )

@@ -16,10 +16,12 @@ export default function Timer() {
 
     if (isRunning) {
       setSeconds(currentMode.timeInSeconds)
+      console.log(seconds)
       timer = setInterval(() => {
         setProgress((state) => {
           if (state >= seconds) {
             setIsRunning(false)
+            console.log(seconds)
             return 0
           } else {
             return state + 1
@@ -51,7 +53,7 @@ export default function Timer() {
 
   return (
     <div className="flex flex-col w-full py-6 justify-center items-center gap-8">
-      <Stopwatch progress={progress} seconds={seconds} />
+      <Stopwatch progress={progress} isRunning={isRunning} />
       {currentMode.mode === 'awaiting'
         ? (
           <Button className='gap-2' onClick={changeMode}>
