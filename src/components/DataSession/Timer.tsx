@@ -14,6 +14,11 @@ export default function Timer() {
   useEffect(() => {
     let timer: NodeJS.Timeout
 
+    if (seconds > 0 && progress === 0 && isRunning === false) {
+      changeMode()
+      console.log('test')
+    }
+
     if (isRunning) {
       setSeconds(currentMode.timeInSeconds)
       console.log(seconds)
@@ -21,15 +26,12 @@ export default function Timer() {
         setProgress((state) => {
           if (state >= seconds) {
             setIsRunning(false)
-            console.log(seconds)
             return 0
           } else {
             return state + 1
           }
         })
       }, 1000)
-    } else if (seconds > 0) {
-      changeMode()
     }
 
     return () => {

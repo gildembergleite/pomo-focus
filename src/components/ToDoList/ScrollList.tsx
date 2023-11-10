@@ -6,21 +6,20 @@ import { Task } from '@/@types/Task'
 import { useMode } from '@/providers/ModeProvider'
 
 export default function ScrollList() {
-  const { data } = useMode()
-  const [tasks, setTasks] = useState<Task[]>()
+  const { tasks } = useMode()
+  const [taskList, setTasksList] = useState<Task[]>([])
 
   useEffect(() => {
-    getAllTasks()
+    getTasks()
   }, [tasks])
 
-  async function getAllTasks() {
-    const tasks = await data.getAllTasks()
-    setTasks([...tasks])
+  async function getTasks() {
+    setTasksList(tasks)
   }
   
   return (
     <ScrollArea className='max-h-[400px]'>
-      {tasks?.map((task) => (
+      {taskList.map((task) => (
         <ListItem key={task.id} task={task} />
       ))}
     </ScrollArea>

@@ -5,13 +5,13 @@ import { Button } from '@/components/ui/button'
 import { ModeContext } from '@/providers/ModeProvider'
 
 export default function InputForm() {
-  const { data } = useContext(ModeContext)
+  const { addNewTask } = useContext(ModeContext)
 
   const [inputValue, setInputValue] = useState('')
 
   async function handleAddNewTask(event: FormEvent) {
     event.preventDefault()
-    await data.addNewTask(inputValue)
+    await addNewTask(inputValue)
     setInputValue('')
   }
 

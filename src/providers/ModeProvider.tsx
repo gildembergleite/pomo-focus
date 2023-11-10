@@ -1,5 +1,6 @@
 'use client'
 import { Mode } from '@/@types/Mode'
+import { Task } from '@/@types/Task'
 import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/ModeWithDurations'
 import TaskService from '@/services/TaskServices'
 import { ReactNode, createContext, useContext, useState } from 'react'
@@ -8,17 +9,24 @@ export interface ModeContextProps {
   data: TaskService
   currentMode: Mode
   nextMode: Mode
+  tasks: Task[]
   changeMode: () => void
+  addNewTask: (taskDescription: string) => void
 }
 
 export const ModeContext = createContext({} as ModeContextProps)
 
 export function ModeProvider({ children }: { children: ReactNode }) {
   const data = new TaskService()
-
   const [currentMode, setCurrentMode] = useState<Mode>(awaitingMode)
   const [nextMode, setNextMode] = useState<Mode>(focusMode)
   const [countCycles, setCountCycles] = useState<number>(0)
+  const [tasks, setTasks] = useState<Task[]>(data.tasks)
+
+  async function getTasks() {
+    const tasks = await data.getAllTasks()
+    setTasks(tasks)
+  }
 
   function setModeConfig(currentMode: Mode, nextMode: Mode) {
     setCurrentMode(currentMode)
@@ -42,8 +50,13 @@ export function ModeProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function addNewTask(taskDescription: string) {
+    await data.addNewTask(taskDescription)
+    await getTasks()
+  }
+
   return (
-    <ModeContext.Provider value={{ data, currentMode, nextMode, changeMode }}>
+    <ModeContext.Provider value={{ data, currentMode, nextMode, changeMode, addNewTask, tasks }}>
       {children}
     </ModeContext.Provider>
   )
