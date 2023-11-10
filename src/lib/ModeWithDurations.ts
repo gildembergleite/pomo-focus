@@ -7,15 +7,15 @@ export const awaitingMode: Mode = {
 
 export const focusMode: Mode = {
   mode: 'focus',
-  timeInSeconds: 60,
+  timeInSeconds: 1500,
 }
 
 export const shortPauseMode: Mode = {
   mode: 'shortPause',
-  timeInSeconds: 2,
+  timeInSeconds: 300,
 }
 
 export const longPauseMode: Mode = {
   mode: 'longPause',
-  timeInSeconds: 2,
+  timeInSeconds: 900,
 }

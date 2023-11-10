@@ -4,7 +4,6 @@ import { useMode } from '@/providers/ModeProvider'
 import { useEffect, useState } from 'react'
 
 interface StopwatchProps {
-  isRunning: boolean
   progress: number;
 }
 

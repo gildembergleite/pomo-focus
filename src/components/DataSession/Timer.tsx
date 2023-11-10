@@ -53,7 +53,7 @@ export default function Timer() {
 
   return (
     <div className="flex flex-col w-full py-6 justify-center items-center gap-8">
-      <Stopwatch progress={progress} isRunning={isRunning} />
+      <Stopwatch progress={progress} />
       {currentMode.mode === 'awaiting'
         ? (
           <Button className='gap-2' onClick={changeMode}>
