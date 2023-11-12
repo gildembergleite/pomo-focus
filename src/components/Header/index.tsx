@@ -1,24 +1,23 @@
-import { Sun, Github, Languages  } from 'lucide-react'
+import { Github, Languages  } from 'lucide-react'
 import Link from 'next/link'
+import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   return (
     <header className='flex w-full justify-between items-center'>
       <div>
-        <h1 className='text-zinc-800 text-4xl font-extrabold'>Pomodoro</h1>
-        <p className='text-zinc-500'>Gerencie seu tempo de maneira mágica!</p>
+        <h1 className='text-foreground text-4xl font-extrabold'>Pomo Focus</h1>
+        <p className='text-accent-foreground'>Gerencie seu tempo de maneira mágica!</p>
       </div>
       <div className='flex gap-2'>
-        <Link className='p-2 rounded-lg bg-zinc-100' href="#">
-          <Sun size={16} color='#A1A1A1' />
+        <ThemeToggle />
+
+        <Link className='flex justify-center items-center h-9 w-9 p-2 rounded-lg bg-zinc-100 text-zinc-500 hover:text-foreground transition-colors duration-300 dark:hover:bg-background hover:drop-shadow-sm hover:shadow-background' href="#">
+          <Github size={16} />
         </Link>
 
-        <Link className='p-2 rounded-lg bg-zinc-100' href="#">
-          <Github size={16} color='#A1A1A1' />
-        </Link>
-
-        <Link className='p-2 rounded-lg bg-zinc-100' href="#">
-          <Languages size={16} color='#A1A1A1' />
+        <Link className='flex justify-center items-center h-9 w-9 p-2 rounded-lg bg-zinc-100 text-zinc-500 hover:text-foreground transition-colors duration-300 dark:hover:bg-background hover:drop-shadow-sm hover:shadow-background' href="#">
+          <Languages size={16} />
         </Link>
       </div>
     </header>
