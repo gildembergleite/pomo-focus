@@ -2,12 +2,10 @@
 import { useState, FormEvent } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { useTasks } from '@/hooks/useTasks'
 
-interface InputFormProps {
-  addNewTask: (taskDescription: string) => void
-}
-
-export default function InputForm({ addNewTask }: InputFormProps) {
+export default function InputForm() {
+  const { addNewTask } = useTasks()
   const [inputValue, setInputValue] = useState('')
 
   async function handleAddNewTask(event: FormEvent) {

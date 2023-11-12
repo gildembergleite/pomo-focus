@@ -4,7 +4,7 @@ import { useContext } from 'react'
 export function useCycles() {
   const context = useContext(CyclesContext)
   if (!context) {
-    throw new Error('useMode must be used within a ModeProvider')
+    throw new Error('useCycles must be used within a ModeProvider')
   }
   return context
 }
