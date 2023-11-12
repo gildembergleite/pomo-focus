@@ -10,7 +10,7 @@ interface StopwatchProps {
 const rajdhani = Rajdhani({ subsets: ['latin'], weight: '700'})
 
 export default function Stopwatch({ progress }: StopwatchProps) {
-  const { currentMode } = useCycles()
+  const { currentMode, isRunning } = useCycles()
   const [strokeColor, setStrokeColor] = useState('')
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
@@ -31,8 +31,10 @@ export default function Stopwatch({ progress }: StopwatchProps) {
     setMinutes(mins)
     setSeconds(secs)
 
-    if (currentMode.mode !== 'awaiting') {
+    if (isRunning) {
       document.title = `Time: ${timer}`
+    } else {
+      document.title = 'Pomo Focus'
     }
     
   }, [progress, currentMode])
