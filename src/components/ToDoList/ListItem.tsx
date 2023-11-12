@@ -25,7 +25,7 @@ export default function ListItem({ task }: ListItemProps) {
         <Checkbox
           onClick={() => handleMarkTaskAsCompleted(task.id)}
           checked={task.isCompleted} />
-        <p className={`${task.isCompleted ? 'line-through text-foreground/30' : ''} text-foreground/70 font-medium`}>
+        <p className={`${task.isCompleted ? 'line-through text-foreground/20' : ''} text-foreground/70 font-medium`}>
           {task.description}
         </p>
       </div>
