@@ -13,7 +13,11 @@ export default function Stopwatch({ progress }: StopwatchProps) {
   const { currentMode } = useCycles()
   const [strokeColor, setStrokeColor] = useState('')
   const [minutes, setMinutes] = useState(0)
-  const [displaySeconds, setDisplaySeconds] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+
+  const minutesFormatted = String(minutes).padStart(2, '0')
+  const secondsFormatted = String(seconds).padStart(2, '0')
+  const timer = `${minutesFormatted}:${secondsFormatted}`
 
   useEffect(() => {
     setStrokeColor(modeColors[currentMode.mode])
@@ -25,7 +29,12 @@ export default function Stopwatch({ progress }: StopwatchProps) {
     const secs = remainingSeconds % 60
 
     setMinutes(mins)
-    setDisplaySeconds(secs)
+    setSeconds(secs)
+
+    if (currentMode.mode !== 'awaiting') {
+      document.title = `Time: ${timer}`
+    }
+    
   }, [progress, currentMode])
 
   const modeColors: { [key in typeof currentMode.mode]: string } = {
@@ -58,9 +67,7 @@ export default function Stopwatch({ progress }: StopwatchProps) {
       <div className={`
       ${rajdhani.className} flex w-56 h-56 justify-center items-center text-6xl 
       text-zinc-600 font-bold bg-white border-[14px] rounded-full border-zinc-100`}>
-        <span>{String(minutes).padStart(2, '0')}</span>
-        <span>:</span>
-        <span>{String(displaySeconds).padStart(2, '0')}</span>
+        <span>{timer}</span>
       </div>
     </div>
   )

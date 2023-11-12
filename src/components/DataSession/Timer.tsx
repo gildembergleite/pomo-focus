@@ -1,59 +1,19 @@
 'use client'
-import { useState, useEffect } from 'react'
 import { Button } from '../ui/button'
 import { Pause, Play, RefreshCw } from 'lucide-react'
 import Stopwatch from './Stopwatch'
 import { useCycles } from '@/hooks/useCycles'
 
 export default function Timer() {
-  const { currentMode, changeMode } = useCycles()
-  const [progress, setProgress] = useState(0)
-  const [seconds, setSeconds] = useState(0)
-  const [isRunning, setIsRunning] = useState(false)
-  const [isFinished, setIsFinished] = useState(false)
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout
-
-    if (seconds > 0 && progress === 0 && isFinished === true) {
-      changeMode()
-    }
-
-    if (isRunning) {
-      setSeconds(currentMode.timeInSeconds)
-      console.log(seconds)
-      timer = setInterval(() => {
-        setProgress((state) => {
-          if (state >= seconds) {
-            setIsRunning(false)
-            setIsFinished(true)
-            return 0
-          } else {
-            return state + 1
-          }
-        })
-      }, 1000)
-    }
-
-    return () => {
-      clearInterval(timer)
-    }
-  }, [isRunning, seconds])
-
-  async function startTimer() {
-    setIsRunning(true)
-    setIsFinished(false)
-  }
-
-  const stopTimer = () => {
-    setIsRunning(false)
-  }
-
-  const resetTimer = () => {
-    setIsRunning(false)
-    setProgress(0)
-  }
-
+  const {
+    currentMode,
+    progress,
+    isRunning,
+    changeMode,
+    startTimer,
+    stopTimer,
+    resetTimer
+  } = useCycles()
 
   return (
     <div className="flex flex-col w-full py-6 justify-center items-center gap-8">
