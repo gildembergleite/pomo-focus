@@ -40,7 +40,7 @@ export default function Stopwatch({ progress }: StopwatchProps) {
   }, [progress, currentMode])
 
   const modeColors: { [key in typeof currentMode.mode]: string } = {
-    awaiting: 'stroke-foreground/70',
+    awaiting: '',
     focus: 'stroke-lime-500',
     shortPause: 'stroke-amber-500',
     longPause: 'stroke-cyan-500',
@@ -62,12 +62,12 @@ export default function Stopwatch({ progress }: StopwatchProps) {
           cy="50"
           r="48"
           fill="transparent"
-          strokeWidth="8"
+          strokeWidth="8.5"
           style={borderStyle}
         />
       </svg>
       <div className={`
-      ${rajdhani.className} flex w-56 h-56 justify-center items-center text-6xl font-bold bg-card border-[14px] rounded-full text-foreground/70 border-foreground/70`}>
+      ${rajdhani.className} flex w-56 h-56 justify-center items-center text-6xl font-bold bg-card border-[14px] border-foreground/30 rounded-full text-foreground/70`}>
         <span>{timer}</span>
       </div>
     </div>
