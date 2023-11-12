@@ -21,13 +21,13 @@ export default function InputForm() {
   return (
     <form onSubmit={handleAddNewTask} className='flex items-center gap-2'>
       <Input
-        className='bg-zinc-100 text-zinc-600'
+        className='bg-input text-foreground/70'
         placeholder='Adicione uma nova tarefa'
         value={inputValue}
         onChange={(e) => handleSetInputValue(e.target.value)}
         required
       />
-      <Button>Adicionar</Button>
+      <Button className='text-zinc-100 font-bold'>Adicionar</Button>
     </form>
   )
 }

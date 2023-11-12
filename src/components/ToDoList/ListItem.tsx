@@ -25,11 +25,11 @@ export default function ListItem({ task }: ListItemProps) {
         <Checkbox
           onClick={() => handleMarkTaskAsCompleted(task.id)}
           checked={task.isCompleted} />
-        <p className={`${task.isCompleted ? 'line-through text-zinc-300' : ''} text-zinc-500 font-medium`}>
+        <p className={`${task.isCompleted ? 'line-through text-foreground/30' : ''} text-foreground/70 font-medium`}>
           {task.description}
         </p>
       </div>
-      <Button className='hover:text-red-600' size={'icon'} variant={'ghost'} onClick={() => handleDeleteTask(task.id)}>
+      <Button className='text-foreground/70 hover:text-red-600' size={'icon'} variant={'ghost'} onClick={() => handleDeleteTask(task.id)}>
         <Trash2 size={16} />
       </Button>
     </div>
