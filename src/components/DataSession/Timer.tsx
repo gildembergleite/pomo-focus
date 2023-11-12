@@ -18,7 +18,7 @@ export default function Timer() {
   return (
     <div className="flex flex-col w-full py-6 justify-center items-center gap-8">
       <Stopwatch progress={progress} />
-      {currentMode.mode === 'awaiting'
+      {currentMode.description === 'awaiting'
         ? (
           <Button className='text-zinc-100 font-bold gap-2' onClick={changeMode}>
             Iniciar ciclo

@@ -8,7 +8,7 @@ interface ModeProps {
   selectMode: 'currentMode' | 'nextMode'
 }
   
-const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.mode]
+const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.description]
 
 export default function Modes({ selectMode }: ModeProps) {
   const { currentMode, nextMode } = useCycles()

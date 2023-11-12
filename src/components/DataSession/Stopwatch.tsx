@@ -20,7 +20,7 @@ export default function Stopwatch({ progress }: StopwatchProps) {
   const timer = `${minutesFormatted}:${secondsFormatted}`
 
   useEffect(() => {
-    setStrokeColor(modeColors[currentMode.mode])
+    setStrokeColor(modeColors[currentMode.description])
   }, [currentMode])
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Stopwatch({ progress }: StopwatchProps) {
     
   }, [progress, currentMode])
 
-  const modeColors: { [key in typeof currentMode.mode]: string } = {
+  const modeColors: { [key in typeof currentMode.description]: string } = {
     awaiting: '',
     focus: 'stroke-lime-500',
     shortPause: 'stroke-amber-500',
