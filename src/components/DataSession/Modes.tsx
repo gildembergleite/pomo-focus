@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useMode } from '@/providers/ModeProvider'
+import { useCycles } from '@/hooks/useCycles'
 import { Mode } from '@/@types/Mode'
 import { ModeSchemaProps, modeInfo } from '@/lib/ModeInfo'
 
@@ -11,7 +11,7 @@ interface ModeProps {
 const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.mode]
 
 export default function Modes({ selectMode }: ModeProps) {
-  const { currentMode, nextMode } = useMode()
+  const { currentMode, nextMode } = useCycles()
   const mode = selectMode === 'currentMode' ? currentMode : nextMode
   const [modeSchema, setModeSchema] = useState(getDefaultMode(mode))
 

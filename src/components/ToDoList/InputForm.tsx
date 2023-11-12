@@ -1,12 +1,13 @@
 'use client'
-import { useState, FormEvent, useContext } from 'react'
+import { useState, FormEvent } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { ModeContext } from '@/providers/ModeProvider'
 
-export default function InputForm() {
-  const { addNewTask } = useContext(ModeContext)
+interface InputFormProps {
+  addNewTask: (taskDescription: string) => void
+}
 
+export default function InputForm({ addNewTask }: InputFormProps) {
   const [inputValue, setInputValue] = useState('')
 
   async function handleAddNewTask(event: FormEvent) {

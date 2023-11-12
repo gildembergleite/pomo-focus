@@ -3,6 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import CurrentMode from './CurrentMode'
 import NextMode from './NextMode'
 import Timer from './Timer'
+import { CyclesProvider } from '@/context/CyclesContext'
 
 export default function DataSession() {
   return (
@@ -13,11 +14,13 @@ export default function DataSession() {
       </CardHeader>
       <Separator className='my-6' />
       <CardContent className='flex flex-col'>
-        <div className='flex flex-col gap-6 pb-6'>
-          <CurrentMode />
-          <NextMode />
-        </div>
-        <Timer />
+        <CyclesProvider>
+          <div className='flex flex-col gap-6 pb-6'>
+            <CurrentMode />
+            <NextMode />
+          </div>
+          <Timer />
+        </CyclesProvider>
       </CardContent>
     </Card>
   )

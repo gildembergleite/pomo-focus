@@ -1,26 +1,19 @@
-'use client'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import ListItem from './ListItem'
-import { useEffect, useState } from 'react'
 import { Task } from '@/@types/Task'
-import { useMode } from '@/providers/ModeProvider'
 
-export default function ScrollList() {
-  const { tasks } = useMode()
-  const [taskList, setTasksList] = useState<Task[]>([])
+interface ScrollListProps {
+  tasks: Task[]
+  markTaskAsCompleted: (taskId: string) => void
+  deleteTask: (taskId: string) => void
+}
 
-  useEffect(() => {
-    getTasks()
-  }, [tasks])
-
-  async function getTasks() {
-    setTasksList(tasks)
-  }
+export default function ScrollList({ tasks, markTaskAsCompleted, deleteTask }: ScrollListProps) {
   
   return (
     <ScrollArea className='max-h-[400px]'>
-      {taskList.map((task) => (
-        <ListItem key={task.id} task={task} />
+      {tasks.map((task) => (
+        <ListItem key={task.id} task={task} markTaskAsCompleted={markTaskAsCompleted} deleteTask={deleteTask} />
       ))}
     </ScrollArea>
   )

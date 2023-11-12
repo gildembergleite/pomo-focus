@@ -2,11 +2,11 @@
 import { useState, useEffect } from 'react'
 import { Button } from '../ui/button'
 import { Pause, Play, RefreshCw } from 'lucide-react'
-import { useMode } from '@/providers/ModeProvider'
 import Stopwatch from './Stopwatch'
+import { useCycles } from '@/hooks/useCycles'
 
 export default function Timer() {
-  const { currentMode, changeMode } = useMode()
+  const { currentMode, changeMode } = useCycles()
   const [progress, setProgress] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)

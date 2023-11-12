@@ -1,24 +1,22 @@
-'use client'
 import { Task } from '@/@types/Task'
 import { Checkbox } from '@/components/ui/checkbox'
-import { ModeContext } from '@/providers/ModeProvider'
-import { useContext } from 'react'
 import { Button } from '../ui/button'
 import { Trash2 } from 'lucide-react'
 
 interface ListItemProps {
   task: Task
+  markTaskAsCompleted: (taskId: string) => void
+  deleteTask: (taskId: string) => void
 }
 
-export default function ListItem({ task }: ListItemProps) {
-  const { data } = useContext(ModeContext)
-  
-  async function handleMarkTaskAsCompleted(taskId: string) {
-    await data.markTaskAsCompleted(taskId)
+export default function ListItem({ task, markTaskAsCompleted, deleteTask }: ListItemProps) {
+
+  function handleMarkTaskAsCompleted(taskId: string) {
+    markTaskAsCompleted(taskId)
   }
-  
-  async function handleDeleteTask(taskId: string) {
-    await data.deleteTask(taskId)
+
+  function handleDeleteTask(taskId: string) {
+    deleteTask(taskId)
   }
 
   return (

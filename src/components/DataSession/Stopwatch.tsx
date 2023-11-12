@@ -1,6 +1,6 @@
 'use client'
+import { useCycles } from '@/hooks/useCycles'
 import { Rajdhani } from 'next/font/google'
-import { useMode } from '@/providers/ModeProvider'
 import { useEffect, useState } from 'react'
 
 interface StopwatchProps {
@@ -10,7 +10,7 @@ interface StopwatchProps {
 const rajdhani = Rajdhani({ subsets: ['latin'], weight: '700'})
 
 export default function Stopwatch({ progress }: StopwatchProps) {
-  const { currentMode } = useMode()
+  const { currentMode } = useCycles()
   const [strokeColor, setStrokeColor] = useState('')
   const [minutes, setMinutes] = useState(0)
   const [displaySeconds, setDisplaySeconds] = useState(0)

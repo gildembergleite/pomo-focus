@@ -1,32 +1,20 @@
 'use client'
 import { Mode } from '@/@types/Mode'
-import { Task } from '@/@types/Task'
 import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/ModeWithDurations'
-import TaskService from '@/services/TaskServices'
-import { ReactNode, createContext, useContext, useState } from 'react'
+import { ReactNode, createContext, useState } from 'react'
 
-export interface ModeContextProps {
-  data: TaskService
+export interface CycleContextProps {
   currentMode: Mode
   nextMode: Mode
-  tasks: Task[]
   changeMode: () => void
-  addNewTask: (taskDescription: string) => void
 }
 
-export const ModeContext = createContext({} as ModeContextProps)
+export const CyclesContext = createContext({} as CycleContextProps)
 
-export function ModeProvider({ children }: { children: ReactNode }) {
-  const data = new TaskService()
+export function CyclesProvider({ children }: { children: ReactNode }) {
   const [currentMode, setCurrentMode] = useState<Mode>(awaitingMode)
   const [nextMode, setNextMode] = useState<Mode>(focusMode)
   const [countCycles, setCountCycles] = useState<number>(0)
-  const [tasks, setTasks] = useState<Task[]>(data.tasks)
-
-  async function getTasks() {
-    const tasks = await data.getAllTasks()
-    setTasks(tasks)
-  }
 
   function setModeConfig(currentMode: Mode, nextMode: Mode) {
     setCurrentMode(currentMode)
@@ -50,22 +38,11 @@ export function ModeProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function addNewTask(taskDescription: string) {
-    await data.addNewTask(taskDescription)
-    await getTasks()
-  }
-
   return (
-    <ModeContext.Provider value={{ data, currentMode, nextMode, changeMode, addNewTask, tasks }}>
+    <CyclesContext.Provider value={{ currentMode, nextMode, changeMode }}>
       {children}
-    </ModeContext.Provider>
+    </CyclesContext.Provider>
   )
 }
 
-export const useMode = () => {
-  const context = useContext(ModeContext)
-  if (!context) {
-    throw new Error('useMode must be used within a ModeProvider')
-  }
-  return context
-}
+
