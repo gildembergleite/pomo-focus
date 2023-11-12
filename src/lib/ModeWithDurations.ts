@@ -1,21 +1,21 @@
 import { Mode } from '@/@types/Mode'
 
 export const awaitingMode: Mode = {
-  mode: 'awaiting',
+  description:'awaiting',
   timeInSeconds: 0,
 }
 
 export const focusMode: Mode = {
-  mode: 'focus',
+  description:'focus',
   timeInSeconds: 5,
 }
 
 export const shortPauseMode: Mode = {
-  mode: 'shortPause',
+  description:'shortPause',
   timeInSeconds: 5,
 }
 
 export const longPauseMode: Mode = {
-  mode: 'longPause',
+  description:'longPause',
   timeInSeconds: 5,
 }
