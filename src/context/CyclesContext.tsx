@@ -1,7 +1,7 @@
 'use client'
 import { Mode } from '@/@types/Mode'
 import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/ModeWithDurations'
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useEffect, useRef, useState } from 'react'
 
 export interface CycleContextProps {
   currentMode: Mode
@@ -24,10 +24,12 @@ export function CyclesProvider({ children }: { children: ReactNode }) {
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
+  
+  const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
     let timer: NodeJS.Timeout
-
+      
     if (seconds > 0 && progress === 0 && isFinished === true) {
       changeMode()
     }
@@ -38,6 +40,7 @@ export function CyclesProvider({ children }: { children: ReactNode }) {
       timer = setInterval(() => {
         setProgress((state) => {
           if (state >= seconds) {
+            audioRef.current?.play()
             setIsRunning(false)
             setIsFinished(true)
             return 0
@@ -52,6 +55,7 @@ export function CyclesProvider({ children }: { children: ReactNode }) {
       clearInterval(timer)
     }
   }, [isRunning, seconds])
+
 
   function startTimer() {
     setIsRunning(true)
@@ -100,6 +104,7 @@ export function CyclesProvider({ children }: { children: ReactNode }) {
       stopTimer,
       resetTimer
     }}>
+      <audio src='/mp3/alarm.mp3' ref={audioRef}/>
       {children}
     </CyclesContext.Provider>
   )
