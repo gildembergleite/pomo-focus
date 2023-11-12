@@ -20,7 +20,7 @@ export default function Timer() {
       <Stopwatch progress={progress} />
       {currentMode.mode === 'awaiting'
         ? (
-          <Button className='gap-2' onClick={changeMode}>
+          <Button className='text-zinc-100 font-bold gap-2' onClick={changeMode}>
             Iniciar ciclo
           </Button>)
         : (
@@ -30,11 +30,11 @@ export default function Timer() {
                 <Pause size={16} />
               </Button>
             ) : (
-              <Button className='gap-2' onClick={startTimer}>
+              <Button className='text-zinc-100 gap-2' onClick={startTimer}>
                 <Play size={16} />
               </Button>
             )}
-            <Button variant={'destructive'} className='gap-2' onClick={resetTimer}>
+            <Button variant={'destructive'} className='gap-2 text-zinc-100' onClick={resetTimer}>
               <RefreshCw size={16} />
             </Button>
           </div>

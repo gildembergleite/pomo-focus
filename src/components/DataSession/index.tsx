@@ -9,8 +9,8 @@ export default function DataSession() {
   return (
     <Card className='flex flex-col flex-1 rounded-xl p-6'>
       <CardHeader>
-        <CardTitle className='text-2xl font-bold text-zinc-600'>Dados da sessão</CardTitle>
-        <CardDescription className='text-base text-zinc-500'>Acompanhe os próximos ciclos</CardDescription>
+        <CardTitle className='text-2xl font-bold text-foreground/70'>Dados da sessão</CardTitle>
+        <CardDescription className='text-base text-foreground/50'>Acompanhe os próximos ciclos</CardDescription>
       </CardHeader>
       <Separator className='my-6' />
       <CardContent className='flex flex-col'>

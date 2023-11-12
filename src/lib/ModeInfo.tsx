@@ -12,7 +12,7 @@ export interface ModeSchemaProps {
 
 export const modeInfo: ModeInfo = {
   awaiting: {
-    color: 'border-zinc-500 bg-zinc-500 text-zinc-500',
+    color: 'border-foreground/30 bg-background text-foreground/50',
     icon: <Loader2Icon className='text-zinc-500 animate-spin' size={16} />,
     label: 'Aguardando',
   },
