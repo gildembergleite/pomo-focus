@@ -1,27 +1,35 @@
 'use client'
 import { useCycles } from '@/hooks/useCycles'
-import { Rajdhani } from 'next/font/google'
+import { modeColors } from '@/lib/ModeColors'
+import { Roboto_Mono } from 'next/font/google'
 import { useEffect, useState } from 'react'
 
 interface StopwatchProps {
   progress: number;
 }
 
-const rajdhani = Rajdhani({ subsets: ['latin'], weight: '700'})
+const robotoMono = Roboto_Mono({ subsets: ['latin'], weight: '700'})
 
 export default function Stopwatch({ progress }: StopwatchProps) {
   const { currentMode, isRunning } = useCycles()
-  const [strokeColor, setStrokeColor] = useState('')
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
-
+  
   const minutesFormatted = String(minutes).padStart(2, '0')
   const secondsFormatted = String(seconds).padStart(2, '0')
   const timer = `${minutesFormatted}:${secondsFormatted}`
+  
+  const strokeColor = modeColors[currentMode.description]
+  const circumference = 2 * Math.PI * 48
+  const offset = (circumference * progress) / currentMode.timeInSeconds
+  const borderStyle = {
+    strokeDasharray: circumference,
+    strokeDashoffset: -offset,
+  }
 
-  useEffect(() => {
-    setStrokeColor(modeColors[currentMode.description])
-  }, [currentMode])
+  if (currentMode.description !== strokeColor) {
+    modeColors[currentMode.description]
+  }
 
   useEffect(() => {
     const remainingSeconds = currentMode.timeInSeconds - Math.floor(progress)
@@ -36,22 +44,9 @@ export default function Stopwatch({ progress }: StopwatchProps) {
     } else {
       document.title = 'Pomo Focus'
     }
-    
-  }, [progress, currentMode])
+        
+  }, [progress])
 
-  const modeColors: { [key in typeof currentMode.description]: string } = {
-    awaiting: '',
-    focus: 'stroke-lime-500',
-    shortPause: 'stroke-amber-500',
-    longPause: 'stroke-cyan-500',
-  }
-
-  const circumference = 2 * Math.PI * 48
-  const offset = (circumference * progress) / currentMode.timeInSeconds
-  const borderStyle = {
-    strokeDasharray: circumference,
-    strokeDashoffset: -offset,
-  }
 
   return (
     <div className="relative w-56 h-56 rounded-full bg-background">
@@ -67,7 +62,10 @@ export default function Stopwatch({ progress }: StopwatchProps) {
         />
       </svg>
       <div className={`
-      ${rajdhani.className} flex w-56 h-56 justify-center items-center text-6xl font-bold bg-card border-[14px] border-foreground/30 rounded-full text-foreground/70`}>
+        ${robotoMono.className} flex w-56 h-56 justify-center items-center 
+        text-5xl font-bold bg-card border-[14px] border-foreground/30
+        rounded-full text-foreground/70
+      `}>
         <span>{timer}</span>
       </div>
     </div>
