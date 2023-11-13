@@ -36,7 +36,6 @@ export function CyclesProvider({ children }: { children: ReactNode }) {
 
     if (isRunning) {
       setSeconds(currentMode.timeInSeconds)
-      console.log(seconds)
       timer = setInterval(() => {
         setProgress((state) => {
           if (state >= seconds) {

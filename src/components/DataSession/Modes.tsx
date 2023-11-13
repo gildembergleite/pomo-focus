@@ -17,7 +17,6 @@ export default function Modes({ selectMode }: ModeProps) {
 
   if (modeSchema !== getDefaultMode(mode)) {
     setModeSchema(getDefaultMode(mode))
-    console.log('3')
   }
 
   const { icon, color, label } = modeSchema
