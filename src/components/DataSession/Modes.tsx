@@ -11,17 +11,13 @@ interface ModeProps {
 export default function Modes({ selectMode }: ModeProps) {
   const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.description]
   const { currentMode, nextMode } = useCycles()
-  const [mode, setMode] = useState(selectMode === 'currentMode' ? currentMode : nextMode)
+  
+  const mode = selectMode === 'currentMode' ? currentMode : nextMode
   const [modeSchema, setModeSchema] = useState(getDefaultMode(mode))
-
-  if (selectMode === 'currentMode' && currentMode !== mode) {
-    setMode(currentMode)
-  } else if (selectMode === 'nextMode' && nextMode !== mode) {
-    setMode(nextMode)
-  }
 
   if (modeSchema !== getDefaultMode(mode)) {
     setModeSchema(getDefaultMode(mode))
+    console.log('3')
   }
 
   const { icon, color, label } = modeSchema
