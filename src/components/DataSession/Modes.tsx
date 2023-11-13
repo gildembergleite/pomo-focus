@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useCycles } from '@/hooks/useCycles'
 import { Mode } from '@/@types/Mode'
 import { ModeSchemaProps, modeInfo } from '@/lib/ModeInfo'
@@ -7,17 +7,22 @@ import { ModeSchemaProps, modeInfo } from '@/lib/ModeInfo'
 interface ModeProps {
   selectMode: 'currentMode' | 'nextMode'
 }
-  
-const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.description]
 
 export default function Modes({ selectMode }: ModeProps) {
+  const getDefaultMode = (listMode: Mode): ModeSchemaProps => modeInfo[listMode.description]
   const { currentMode, nextMode } = useCycles()
-  const mode = selectMode === 'currentMode' ? currentMode : nextMode
+  const [mode, setMode] = useState(selectMode === 'currentMode' ? currentMode : nextMode)
   const [modeSchema, setModeSchema] = useState(getDefaultMode(mode))
 
-  useEffect(() => {
+  if (selectMode === 'currentMode' && currentMode !== mode) {
+    setMode(currentMode)
+  } else if (selectMode === 'nextMode' && nextMode !== mode) {
+    setMode(nextMode)
+  }
+
+  if (modeSchema !== getDefaultMode(mode)) {
     setModeSchema(getDefaultMode(mode))
-  }, [mode])
+  }
 
   const { icon, color, label } = modeSchema
 
