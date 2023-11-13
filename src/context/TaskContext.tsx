@@ -3,7 +3,7 @@ import { ReactNode, createContext, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { Task } from '@/@types/Task'
 
-export interface TasksContextProps {
+interface TasksContextProps {
   tasks: Task[]
   addNewTask: (taskDescription: string) => void
   markTaskAsCompleted: (taskId: string) => void

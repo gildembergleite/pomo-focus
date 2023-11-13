@@ -3,7 +3,7 @@ import { Mode } from '@/@types/Mode'
 import { awaitingMode, focusMode, longPauseMode, shortPauseMode } from '@/lib/ModeWithDurations'
 import { ReactNode, createContext, useEffect, useRef, useState } from 'react'
 
-export interface CycleContextProps {
+interface CycleContextProps {
   currentMode: Mode
   nextMode: Mode
   progress: number
